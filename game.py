@@ -165,8 +165,8 @@ def esay_level():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run=False
-            if Exit_button.draw(screen):
-                run=False
+            # if Exit_button.draw(screen):
+            #     run=False
             if event.type == pygame.MOUSEBUTTONDOWN:
                 x, y = pygame.mouse.get_pos()
                 col = x // 190
@@ -189,8 +189,8 @@ def esay_level():
 
           # Fill the screen with a white background
         display_cards(cards_easy)
-        Exit_button.is_face_up=True
-        Exit_button.draw(screen)
+        # Exit_button.is_face_up=True
+        # Exit_button.draw(screen)
         pygame.display.flip()
         clock.tick(60)
     for card in cards_easy:
