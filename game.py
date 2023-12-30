@@ -10,7 +10,7 @@ class Card:
         self.is_face_up = False
 
 # Set up window
-width, height = 800, 700
+width, height = 800, 600
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Memory Matching Game")
 font=pygame.font.SysFont(None,60,italic=True)
@@ -70,12 +70,12 @@ card_images_hard = []
 for i in range(1, 9):
     img = pygame.image.load(f"image_{i}.png")
     card_images_hard.extend([img, img])
-random.shuffle(card_images_hard)
-cards_hard = [Card(image) for image in card_images_hard]
 def hard_level():
     finish=0
     selected_cards = []
     run =True
+    random.shuffle(card_images_hard)
+    cards_hard = [Card(image) for image in card_images_hard]
     while run and finish!=8:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -83,7 +83,7 @@ def hard_level():
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 x, y = pygame.mouse.get_pos()
-                col = x // 180
+                col = x // 190
                 row = y // 150
                 index = row * 4 + col
                 selected_cards.append(cards_hard[index])
@@ -105,16 +105,18 @@ def hard_level():
         display_cards(cards_hard)
         pygame.display.flip()
         clock.tick(60)
+    for card in cards_hard:
+        card.is_face_up=False
 card_images_med = []
 for i in range(1, 7):
     img = pygame.image.load(f"image_{i}.png")
     card_images_med.extend([img, img])
-random.shuffle(card_images_med)
-cards_med = [Card(image) for image in card_images_med]
 def med_level():
     finish=0
     selected_cards = []
     run=True
+    random.shuffle(card_images_med)
+    cards_med = [Card(image) for image in card_images_med]
     while run and finish!=6:
         screen.fill((202,228,241))
         for event in pygame.event.get():
@@ -123,7 +125,7 @@ def med_level():
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 x, y = pygame.mouse.get_pos()
-                col = x // 180
+                col = x // 190
                 row = y // 150
                 index = row * 4 + col
                 selected_cards.append(cards_med[index])
@@ -145,16 +147,19 @@ def med_level():
         display_cards(cards_med)
         pygame.display.flip()
         clock.tick(60)
+    for card in cards_med:
+        card.is_face_up=False
+    cards_med[index].is_face_up=False
 card_images_easy = []
 for i in range(1, 5):
     img = pygame.image.load(f"image_{i}.png")
     card_images_easy.extend([img, img])
-random.shuffle(card_images_easy)
-cards_easy = [Card(image) for image in card_images_easy]
 def esay_level():
     finish=0
     selected_cards = []
     run=True
+    random.shuffle(card_images_easy)
+    cards_easy = [Card(image) for image in card_images_easy]
     while run and finish!=4:
         screen.fill((202,228,241))
         for event in pygame.event.get():
@@ -164,7 +169,7 @@ def esay_level():
                 run=False
             if event.type == pygame.MOUSEBUTTONDOWN:
                 x, y = pygame.mouse.get_pos()
-                col = x // 180
+                col = x // 190
                 row = y // 150
                 index = row * 4 + col
                 selected_cards.append(cards_easy[index])
@@ -188,6 +193,9 @@ def esay_level():
         Exit_button.draw(screen)
         pygame.display.flip()
         clock.tick(60)
+    for card in cards_easy:
+        card.is_face_up=False
+        
 Exit=pygame.image.load('Exit.png').convert_alpha()
 Hard=pygame.image.load('Hard.png').convert_alpha()
 Med=pygame.image.load('Med.png').convert_alpha()
