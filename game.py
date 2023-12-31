@@ -70,6 +70,7 @@ def hard_level():
     finish=0
     selected_cards = []
     run =True
+    win=True
     random.shuffle(card_images_hard)
     cards_hard = [Card(image) for image in card_images_hard]
     while run and finish!=8:
@@ -78,6 +79,8 @@ def hard_level():
         display_cards(cards_hard)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                win=False
+                return win
                 run=False
 
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -109,7 +112,7 @@ def hard_level():
         clock.tick(60)
     for card in cards_hard:
         card.is_face_up=False
-    pygame.time.wait(100)
+    return win
 card_images_med = []
 for i in range(1, 7):
     img = pygame.image.load(f"image_{i}.png")
@@ -117,6 +120,7 @@ for i in range(1, 7):
 def med_level():
     finish=0
     selected_cards = []
+    win=True
     run=True
     random.shuffle(card_images_med)
     cards_med = [Card(image) for image in card_images_med]
@@ -126,6 +130,8 @@ def med_level():
         display_cards(cards_med)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                win=False
+                return win
                 run=False
 
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -157,13 +163,13 @@ def med_level():
         clock.tick(60)
     for card in cards_med:
         card.is_face_up=False
-    pygame.time.wait(100)
+    return win
 card_images_easy = []
 for i in range(1, 5):
     img = pygame.image.load(f"image_{i}.png")
     card_images_easy.extend([img, img])
 def esay_level():
-    win=False
+    win=True
     finish=0
     selected_cards = []
     run=True
@@ -175,6 +181,8 @@ def esay_level():
         display_cards(cards_easy)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                win=False
+                return win
                 run=False
             # if Exit_button.draw(screen):
             #     run=False
@@ -205,7 +213,6 @@ def esay_level():
         # display_cards(cards_easy)
         # Exit_button.is_face_up=True
         # Exit_button.draw(screen)
-        win=True
         pygame.display.flip()
         clock.tick(60)
     for card in cards_easy:
@@ -248,12 +255,12 @@ while run:
             if esay_level():
                 Score+=1
         if Med_button.draw(screen):
-            med_level()
-            Score+=1
+            if med_level():
+                Score+=1
             
         if Hard_button.draw(screen):
-            hard_level()
-            Score+=1
+            if hard_level():
+                Score+=1
             
     pygame.display.update()
     clock.tick(60) 
