@@ -2,6 +2,7 @@ import pygame
 import sys
 import random
 import time
+from pygame import mixer
 
 pygame.init()
 class Card:
@@ -15,6 +16,8 @@ screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Memory Matching Game")
 font=pygame.font.SysFont(None,60,italic=True)
 clock = pygame.time.Clock()
+mixer.music.load('BackgroundMusic.mp3')
+mixer.music.play(-1)
 class Button():
     def __init__(self,x,y,image,scale):
         self.x=x
@@ -84,6 +87,8 @@ def hard_level():
                 run=False
 
             if event.type == pygame.MOUSEBUTTONDOWN:
+                click_sound=mixer.Sound('BubbleBell.wav')
+                click_sound.play()
                 x, y = pygame.mouse.get_pos()
                 col = x // 190
                 row = y // 150
@@ -100,6 +105,8 @@ def hard_level():
                     # Cards match, keep them face up
                         selected_cards = []
                         finish+=1
+                        if finish==8 and not all(card.is_face_up for card in cards_hard):
+                            finish-=1
                     else:
                     # Cards do not match, flip them back face down
                         for card in selected_cards:
@@ -135,6 +142,8 @@ def med_level():
                 run=False
 
             if event.type == pygame.MOUSEBUTTONDOWN:
+                click_sound=mixer.Sound('BubbleBell.wav')
+                click_sound.play()
                 x, y = pygame.mouse.get_pos()
                 col = x // 190
                 row = y // 150
@@ -151,6 +160,8 @@ def med_level():
                     # Cards match, keep them face up
                         selected_cards = []
                         finish+=1
+                        if finish==6 and not all(card.is_face_up for card in cards_med):
+                            finish-=1
                     else:
                     # Cards do not match, flip them back face down
                         for card in selected_cards:
@@ -175,7 +186,7 @@ def esay_level():
     run=True
     random.shuffle(card_images_easy)
     cards_easy = [Card(image) for image in card_images_easy]
-    while run and finish!=4:
+    while run and finish!=4 :
         screen.fill((202,228,241))
         screen.blit(Background,Background_rec)
         display_cards(cards_easy)
@@ -187,6 +198,8 @@ def esay_level():
             # if Exit_button.draw(screen):
             #     run=False
             if event.type == pygame.MOUSEBUTTONDOWN:
+                click_sound=mixer.Sound('BubbleBell.wav')
+                click_sound.play()
                 x, y = pygame.mouse.get_pos()
                 col = x // 190
                 row = y // 150
@@ -203,6 +216,9 @@ def esay_level():
                     # Cards match, keep them face up
                         selected_cards = []
                         finish+=1
+                        if finish==4 and not all(card.is_face_up for card in cards_easy):
+                            finish-=1
+                            
                     else:
                     # Cards do not match, flip them back face down
                         for card in selected_cards:
@@ -250,17 +266,32 @@ while run:
         if event.type==pygame.QUIT:
             run=False
         if Exit_button.draw(screen):
+            click_sound=mixer.Sound('clickSound.wav')
+            click_sound.play()
             run=False
         if Easy_button.draw(screen):
+            click_sound=mixer.Sound('clickSound.wav')
+            click_sound.play()
             if esay_level():
                 Score+=1
+                click_sound=mixer.Sound('VICTORY.wav')
+                click_sound.play()
         if Med_button.draw(screen):
+            click_sound=mixer.Sound('clickSound.wav')
+            click_sound.play()
             if med_level():
                 Score+=1
+                click_sound=mixer.Sound('VICTORY.wav')
+                click_sound.play()
             
         if Hard_button.draw(screen):
+            click_sound=mixer.Sound('clickSound.wav')
+            click_sound.play()
             if hard_level():
                 Score+=1
+                click_sound=mixer.Sound('VICTORY.wav')
+                click_sound.play()
+                
             
     pygame.display.update()
     clock.tick(60) 
