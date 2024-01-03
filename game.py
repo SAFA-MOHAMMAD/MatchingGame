@@ -18,6 +18,13 @@ font=pygame.font.SysFont(None,60,italic=True)
 clock = pygame.time.Clock()
 mixer.music.load('BackgroundMusic.mp3')
 mixer.music.play(-1)
+lifeHeart=pygame.image.load('lifeHeart.png')
+lifeHeart_rec=lifeHeart.get_rect(center=(470,650))
+lifeHeart_rec2=lifeHeart.get_rect(center=(540,650))
+lifeHeart_rec3=lifeHeart.get_rect(center=(610,650))
+lifeHeart_rec4=lifeHeart.get_rect(center=(680,650))
+lifeHeart_rec5=lifeHeart.get_rect(center=(750,650))
+
 class Button():
     def __init__(self,x,y,image,scale):
         self.x=x
@@ -58,18 +65,12 @@ def display_cards(cards):
             card_back = pygame.image.load("Rectangle.png")  # Replace with your card back image filename
             screen.blit(card_back, (x, y))
 
-# Load images
-# card_images = []
-# for i in range(1, 9):
-#     img = pygame.image.load(f"image_{i}.png")  # Replace with your image filenames
-#     card_images.extend([img, img])
-# random.shuffle(card_images)
-# cards = [Card(image) for image in card_images]
 card_images_hard = []
 for i in range(1, 9):
     img = pygame.image.load(f"image_{i}.png")
     card_images_hard.extend([img, img])
 def hard_level():
+    life=5
     finish=0
     selected_cards = []
     run =True
@@ -80,6 +81,29 @@ def hard_level():
         screen.fill((202,228,241))
         screen.blit(Background,Background_rec)
         display_cards(cards_hard)
+        if life==5:
+            screen.blit(lifeHeart,lifeHeart_rec)
+            screen.blit(lifeHeart,lifeHeart_rec2)
+            screen.blit(lifeHeart,lifeHeart_rec3)
+            screen.blit(lifeHeart,lifeHeart_rec4)
+            screen.blit(lifeHeart,lifeHeart_rec5)
+        elif life==4:
+            screen.blit(lifeHeart,lifeHeart_rec)
+            screen.blit(lifeHeart,lifeHeart_rec2)
+            screen.blit(lifeHeart,lifeHeart_rec3)
+            screen.blit(lifeHeart,lifeHeart_rec4)
+        elif life==3 :
+            screen.blit(lifeHeart,lifeHeart_rec)
+            screen.blit(lifeHeart,lifeHeart_rec2)
+            screen.blit(lifeHeart,lifeHeart_rec3)
+        elif life==2:
+            screen.blit(lifeHeart,lifeHeart_rec)
+            screen.blit(lifeHeart,lifeHeart_rec2)
+        elif life==1:
+            screen.blit(lifeHeart,lifeHeart_rec)            
+        elif life==0:
+            win=False
+            return win
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 win=False
@@ -100,7 +124,12 @@ def hard_level():
                     selected_cards.append(selected_card)
                     selected_card.is_face_up = True
                 if len(selected_cards) == 2:
-                    pygame.time.wait(500)  # Pause for a moment to show the second card
+                    run_inside=True
+                    while run_inside:
+                        display_cards(cards_hard)
+                        pygame.display.update()
+                        if pygame.time.delay(500):
+                           run_inside=False
                     if selected_cards[0].image == selected_cards[1].image:
                     # Cards match, keep them face up
                         selected_cards = []
@@ -108,6 +137,9 @@ def hard_level():
                         if finish==8 and not all(card.is_face_up for card in cards_hard):
                             finish-=1
                     else:
+                        life-=1
+                        losing_sound=mixer.Sound('losing.wav')
+                        losing_sound.play()
                     # Cards do not match, flip them back face down
                         for card in selected_cards:
                             card.is_face_up = False
@@ -125,6 +157,7 @@ for i in range(1, 7):
     img = pygame.image.load(f"image_{i}.png")
     card_images_med.extend([img, img])
 def med_level():
+    life=5
     finish=0
     selected_cards = []
     win=True
@@ -135,6 +168,29 @@ def med_level():
         screen.fill((202,228,241))
         screen.blit(Background,Background_rec)
         display_cards(cards_med)
+        if life==5:
+            screen.blit(lifeHeart,lifeHeart_rec)
+            screen.blit(lifeHeart,lifeHeart_rec2)
+            screen.blit(lifeHeart,lifeHeart_rec3)
+            screen.blit(lifeHeart,lifeHeart_rec4)
+            screen.blit(lifeHeart,lifeHeart_rec5)
+        elif life==4:
+            screen.blit(lifeHeart,lifeHeart_rec)
+            screen.blit(lifeHeart,lifeHeart_rec2)
+            screen.blit(lifeHeart,lifeHeart_rec3)
+            screen.blit(lifeHeart,lifeHeart_rec4)
+        elif life==3 :
+            screen.blit(lifeHeart,lifeHeart_rec)
+            screen.blit(lifeHeart,lifeHeart_rec2)
+            screen.blit(lifeHeart,lifeHeart_rec3)
+        elif life==2:
+            screen.blit(lifeHeart,lifeHeart_rec)
+            screen.blit(lifeHeart,lifeHeart_rec2)
+        elif life==1:
+            screen.blit(lifeHeart,lifeHeart_rec)            
+        elif life==0:
+            win=False
+            return win
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 win=False
@@ -154,8 +210,15 @@ def med_level():
                 if selected_card not in selected_cards:
                     selected_cards.append(selected_card)
                     selected_card.is_face_up = True
+                    # pygame.time.wait(500)  # Pause for a moment to show the second card
                 if len(selected_cards) == 2:
-                    pygame.time.wait(500)  # Pause for a moment to show the second card
+                    run_inside=True
+                    while run_inside:
+                        display_cards(cards_med)
+                        pygame.display.update()
+                        if pygame.time.delay(500):
+                           run_inside=False
+                    
                     if selected_cards[0].image == selected_cards[1].image:
                     # Cards match, keep them face up
                         selected_cards = []
@@ -163,6 +226,9 @@ def med_level():
                         if finish==6 and not all(card.is_face_up for card in cards_med):
                             finish-=1
                     else:
+                        life-=1
+                        losing_sound=mixer.Sound('losing.wav')
+                        losing_sound.play()
                     # Cards do not match, flip them back face down
                         for card in selected_cards:
                             card.is_face_up = False
@@ -180,6 +246,7 @@ for i in range(1, 5):
     img = pygame.image.load(f"image_{i}.png")
     card_images_easy.extend([img, img])
 def esay_level():
+    life=5
     win=True
     finish=0
     selected_cards = []
@@ -190,6 +257,32 @@ def esay_level():
         screen.fill((202,228,241))
         screen.blit(Background,Background_rec)
         display_cards(cards_easy)
+        if life==5:
+            screen.blit(lifeHeart,lifeHeart_rec)
+            screen.blit(lifeHeart,lifeHeart_rec2)
+            screen.blit(lifeHeart,lifeHeart_rec3)
+            screen.blit(lifeHeart,lifeHeart_rec4)
+            screen.blit(lifeHeart,lifeHeart_rec5)
+        elif life==4:
+            screen.blit(lifeHeart,lifeHeart_rec)
+            screen.blit(lifeHeart,lifeHeart_rec2)
+            screen.blit(lifeHeart,lifeHeart_rec3)
+            screen.blit(lifeHeart,lifeHeart_rec4)
+        elif life==3 :
+            screen.blit(lifeHeart,lifeHeart_rec)
+            screen.blit(lifeHeart,lifeHeart_rec2)
+            screen.blit(lifeHeart,lifeHeart_rec3)
+        elif life==2:
+            screen.blit(lifeHeart,lifeHeart_rec)
+            screen.blit(lifeHeart,lifeHeart_rec2)
+        elif life==1:
+            screen.blit(lifeHeart,lifeHeart_rec)            
+        elif life==0:
+            win=False
+            return win
+        # life_st=font.render(f"Live left:{live}",True,'Red')
+        # life_st_rec=life_st.get_rect(bottomright=(780,650))
+        # screen.blit(life_st,life_st_rec)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 win=False
@@ -211,7 +304,12 @@ def esay_level():
                     selected_cards.append(selected_card)
                     selected_card.is_face_up = True
                 if len(selected_cards) == 2:
-                    pygame.time.wait(500)  # Pause for a moment to show the second card
+                    run_inside=True
+                    while run_inside:
+                        display_cards(cards_easy)
+                        pygame.display.update()
+                        if pygame.time.delay(500):
+                           run_inside=False
                     if selected_cards[0].image == selected_cards[1].image:
                     # Cards match, keep them face up
                         selected_cards = []
@@ -220,6 +318,9 @@ def esay_level():
                             finish-=1
                             
                     else:
+                        life-=1
+                        losing_sound=mixer.Sound('losing.wav')
+                        losing_sound.play()
                     # Cards do not match, flip them back face down
                         for card in selected_cards:
                             card.is_face_up = False
@@ -245,10 +346,10 @@ Hard_button=Button(650,500,Hard,1)
 Exit_button=Button(400,650,Exit,0.6)
 Background=pygame.image.load('Background.png').convert_alpha()
 Background_rec=Background.get_rect(center=(400,350))
-Welcome=font.render('Welcome',True,'Black')
+Welcome=font.render('Welcome',True,'cornflowerBlue')
 Welcome_rec=Welcome.get_rect(center=(400,300))
-level_st=font.render('choose a level to start playing',True,'Black')
-level_st_rec=level_st.get_rect(center=(400,350))
+level_st=font.render('choose a level to start playing',True,'cornflowerBlue')
+level_st_rec=level_st.get_rect(center=(400,390))
 Score=0
 run=True
 while run:
@@ -292,7 +393,6 @@ while run:
                 click_sound=mixer.Sound('VICTORY.wav')
                 click_sound.play()
                 
-            
     pygame.display.update()
     clock.tick(60) 
 
