@@ -11,7 +11,7 @@ class Card:
 # Set up window
 width, height = 800, 700
 screen = pygame.display.set_mode((width, height))
-pygame.display.set_caption("Memory Matching Game")
+pygame.display.set_caption("Sugar Rush")
 font=pygame.font.SysFont(None,85)
 clock = pygame.time.Clock()
 mixer.music.load('BackgroundMusic.wav')
