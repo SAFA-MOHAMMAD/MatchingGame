@@ -383,10 +383,10 @@ while run:
     screen.blit(Welcome,Welcome_rec)
     screen.blit(level_st,level_st_rec)
     Score_st=pygame.image.load('TotalScore.png')
-    Score_st_rec=Score_st.get_rect(bottomleft=(10,670))
+    Score_st_rec=Score_st.get_rect(bottomleft=(5,670))
     screen.blit(Score_st,Score_st_rec)
     Score_pr=font.render(f"{Score}",True,'white')
-    Score_pr_rec=Score_pr.get_rect(bottomright=(278,675))
+    Score_pr_rec=Score_pr.get_rect(bottomright=(300,675))
     screen.blit(Score_pr,Score_pr_rec)
     for button in [Easy_button,Med_button,Hard_button,Exit_button]:
         button.is_face_up=True
