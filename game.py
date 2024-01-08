@@ -124,6 +124,15 @@ def hard_level():
                         life-=1
                         losing_sound=mixer.Sound('losing.wav')
                         losing_sound.play()
+                        if life==0:
+                            Lose=pygame.image.load('LOSE.png')
+                            Lose_rec=Lose.get_rect(center=(400,350))
+                            run_inside=True
+                            while run_inside:
+                                screen.blit(Lose,Lose_rec)
+                                pygame.display.update()
+                                if pygame.time.delay(1500):
+                                    run_inside=False
                     # Cards do not match, flip them back face down
                         for card in selected_cards:
                             card.is_face_up = False
@@ -211,6 +220,15 @@ def med_level():
                         life-=1
                         losing_sound=mixer.Sound('losing.wav')
                         losing_sound.play()
+                        if life==0:
+                            Lose=pygame.image.load('LOSE.png')
+                            Lose_rec=Lose.get_rect(center=(400,350))
+                            run_inside=True
+                            while run_inside:
+                                screen.blit(Lose,Lose_rec)
+                                pygame.display.update()
+                                if pygame.time.delay(1500):
+                                    run_inside=False
                     # Cards do not match, flip them back face down
                         for card in selected_cards:
                             card.is_face_up = False
