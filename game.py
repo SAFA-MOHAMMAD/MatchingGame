@@ -17,6 +17,24 @@ clock = pygame.time.Clock()
 mixer.music.load('BackgroundMusic.wav')
 mixer.music.play(-1)
 lifeHeart=pygame.image.load('lifeHeart.png')
+def display_cards_all_first(card_list,time):
+    run_for_one=0
+    run_for=True
+    if run_for_one!=1:
+        while run_for:
+            screen.fill((202,228,241))
+            screen.blit(Background,Background_rec)
+            for card in card_list:
+                card.is_face_up=True
+            display_cards(card_list)
+            pygame.display.update()
+            clock.tick(60)
+            if pygame.time.delay(time):
+                for card in card_list:
+                    card.is_face_up=False
+                run_for=False
+        run_for_one=1
+    
 def display_life(x,y,Num_of_hearts):
     for num in range(Num_of_hearts):
         lifeHeart_rec=lifeHeart.get_rect(center=(x,y))
@@ -69,6 +87,7 @@ def hard_level():
     win=True
     random.shuffle(card_images_hard)
     cards_hard = [Card(image) for image in card_images_hard]
+    display_cards_all_first(cards_hard,3000)
     while run and finish!=8:
         screen.fill((202,228,241))
         screen.blit(Background,Background_rec)
@@ -166,6 +185,7 @@ def med_level():
     run=True
     random.shuffle(card_images_med)
     cards_med = [Card(image) for image in card_images_med]
+    display_cards_all_first(cards_med,2000)
     while run and finish!=6:
         screen.fill((202,228,241))
         screen.blit(Background,Background_rec)
@@ -261,6 +281,7 @@ def esay_level():
     run=True
     random.shuffle(card_images_easy)
     cards_easy = [Card(image) for image in card_images_easy]
+    display_cards_all_first(cards_easy,1000)
     while run and finish!=4:
         screen.fill((202,228,241))
         screen.blit(Background,Background_rec)
