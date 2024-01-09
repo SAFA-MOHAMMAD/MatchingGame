@@ -73,7 +73,7 @@ def display_cards(cards):
             screen.blit(card.image, (x, y))
         else:
             # Display a card back image when the card is face down
-            card_back = pygame.image.load("Rectangle.png")  # Replace with your card back image filename
+            card_back = pygame.image.load("Rectangle.png")
             screen.blit(card_back, (x, y))
 card_images_hard = []
 for i in range(1, 9):
